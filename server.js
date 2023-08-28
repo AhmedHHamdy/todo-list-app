@@ -16,8 +16,8 @@ require('dotenv').config({path: './config/.env'})
 // password config
 require('./config/passport')(passport)
 
-// database connection
-connectDB()
+// // database connection
+// connectDB()
 
 // setting up our template engine
 app.set('view engine', 'ejs')
@@ -49,6 +49,8 @@ app.use('/', mainRoutes)
 app.use('/todos', todoRoutes)
 
 
-app.listen(process.env.PORT, () => {
-  console.log('Server is running, you better catch it')
+connectDB().then(() => {
+  app.listen(process.env.PORT, () => {
+    console.log('Server is running, you better catch it')
+  })
 })
