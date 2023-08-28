@@ -7,6 +7,7 @@ const { ensureGuest } = require('../middleware/auth')
 // routes
 
 router.get('/', ensureGuest, homeController.getIndex)
+router.get('/public/assets/listify.png', ensureGuest, homeController.getImage)
 router.get('/login', ensureGuest, authController.getLogin)
 router.post('/login', authController.postLogin)
 router.get('/signup', ensureGuest, authController.getSignup)
