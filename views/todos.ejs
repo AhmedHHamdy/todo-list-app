@@ -4,29 +4,92 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://kit.fontawesome.com/9d0d3b95e0.js" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="/style.css">
     <title>Document</title>
-    <link rel="stylesheet" href="css/style.css">
 </head>
-<body>
-    <h1>Todos</h1>
-    <ul>
-    <% todos.forEach( el => { %>
-            <li class='todoItem' data-id='<%=el._id%>'>
-                <span class='<%= el.completed === true ? 'completed' : 'not'%>'><%= el.todo %></span>
-                <span class='del'> Delete </span>
+<body class="grid grid-cols-12 h-screen grid-rows-6 auto-rows-min"> 
+    <!-- flex flex-col justify-center items-center -->
+    <header class="col-start-1 col-end-13 grid grid-cols-12">
+        <h1 class="col-start-2 col-end-8 text-2xl font-semibold mt-4">Welcome, <%= user.userName[0].toUpperCase() + user.userName.slice(1)   %></h1>
+        <a class="col-start-9 sm:col-start-10 sm:col-span-2 md:col-start-10 md:col-span-2 col-span-3 self-start text-2xl font-semibold bg-black text-center text-white rounded-md p-2 mt-4" href="/logout">Logout</a>
+    </header>
+
+    <!-- <h2 class="col-start-4 row-start-2 col-span-6 text-1xl font-thin">You've got  <%= left %> things left to do.</h2> -->
+
+
+    <div class="col-start-2 sm:col-start-2 sm:col-span-10 md:col-start-2  col-span-10 row-start-2 ">
+        <h2 class="text-2xl font-thin ">You've got  <%= left %> things left to do.</h2>
+
+        <form class="my-6" action="/todos/createTodo" method='POST' id="todoForm">
+            <input class="outline-none text-3xl w-full" type="text" placeholder="Add a new task..." name='todoItem' maxlength="100">
+            <!-- <input type="submit"> -->
+        </form>
+
+
+        <!-- <h1 class="mt-4 text-red-700">Todos</h1> -->
+        
+        <!-- <ul>
+        <% todos.forEach( el => { %>
+            <div class="bg-[#F4F4F4] my-4 flex col p-6 ">
+                <li class='todoItem text-2xl flex w-[100%] justify-between cursor-pointer' data-id='<%=el._id%>'>
+                    <span class='<%= el.completed === true ? 'completed line-through' : 'not'%>'><%= el.todo %></span>
+                    <span class='del  '> <i class="fa-solid fa-trash"></i> </span>
+                </li>
+            </div>
+        <% }) %>    
+        </ul> -->
+
+        <!-- space-x-4 -->
+        <ul>
+        <% todos.forEach( el => { %>
+            <li>
+                <div class="bg-[#F4F4F4] my-4 flex flex-col p-6 relative">
+                    <label class='todoItem text-md sm:text-2xl w-[90%] flex items-center justify-start cursor-pointer ' data-id='<%=el._id%>'>
+                        <input type="checkbox" class="form-checkbox h-7 w-7 text-blue-500 accent-black mr-3" data-id="<%= el._id %>" <%= el.completed ? 'checked' : '' %>>
+                        <p class="<%= el.completed ? 'completed line-through ' : '' %>"><%= el.todo %></p>
+                        <!-- <span class='flex-grow'></span> -->
+                    </label>
+                    <span class='del flex items-center justify-center cursor-pointer text-2xl self-end pt-1 absolute'> <i class="fa-solid fa-trash"></i> </span>
+
+                    <span class="text-md     mt-4 ">
+                        <% let createdAtDate = new Date(el.createdAt); %>
+                        <% let options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric', hour: 'numeric', minute: 'numeric', second: 'numeric' }; %>
+                        <% let formattedCreatedAt = new Intl.DateTimeFormat('en-US', options).format(createdAtDate); %>
+                        <%= formattedCreatedAt %>
+                    </span>
+                </div>
+
+
+
+
+
+                
+                
+                
             </li>
-    <% }) %>    
-    </ul>
+  
+        <% }) %>    
+        </ul>
 
-    <h2><%= user.userName %> has <%= left %> things left to do.</h2>
+        
 
-    <form action="/todos/createTodo" method='POST'>
-        <input type="text" placeholder="Enter Todo Item" name='todoItem'>
-        <input type="submit">
-    </form>
+ 
+    </div>
 
-    <a href="/logout">Logout</a>
 
-    <script src="js/main.js"></script>
+
+    <script src="js/main.js">
+        const todoForm = document.getElementById('todoForm');
+        const todoInput = todoForm.querySelector('input[name="todoItem"]');
+
+        todoInput.addEventListener('keydown', function(event) {
+            if (event.key === 'Enter') {
+                event.preventDefault(); // Prevent the default Enter key behavior (e.g., line break)
+                todoForm.submit(); // Submit the form
+            }
+        });
+    </script>
 </body>
 </html>
+

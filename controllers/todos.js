@@ -4,8 +4,8 @@ module.exports = {
   getTodos: async (req, res) => {
     console.log(req.user)
     try {
-      const todoItems = await Todo.find({ userId: req.user.id })
-      console.log(todoItems)
+      const todoItems = await Todo.find({ userId: req.user.id }).lean()
+      // console.log(todoItems)
       const itemsLeft = await Todo.countDocuments({ userId: req.user.id, completed: false })
       res.render('todos.ejs', { todos: todoItems, left: itemsLeft, user: req.user})
     } catch (err) {
@@ -23,27 +23,16 @@ module.exports = {
     }
   },
 
-  markComplete: async (req, res) => {
+  toggleTodoStatus: async (req, res) => {
+    console.log(req.body)
     try {
       await Todo.findOneAndUpdate( {_id: req.body.todoIdFromJSFile}, {
-        completed: true
+        completed: req.body.status
       })
       console.log('Marked Complete');
       res.json('Marked Complete')
     } catch (err) {
       console.log(err)
-    }
-  },
-
-  markIncomplete: async (req, res) => {
-    try {
-      await Todo.findByIdAndUpdate( {_id: req.body.todoIdFromJSFile}, {
-        completed: false
-      })
-      console.log('Marked Incomplete')
-      res.json('Marked Incomplete')
-    } catch (err) {
-      console.log(err);
     }
   },
 
@@ -57,3 +46,28 @@ module.exports = {
     }
   }
 }
+
+
+ // markComplete: async (req, res) => {
+  //   try {
+  //     await Todo.findOneAndUpdate( {_id: req.body.todoIdFromJSFile}, {
+  //       completed: true
+  //     })
+  //     console.log('Marked Complete');
+  //     res.json('Marked Complete')
+  //   } catch (err) {
+  //     console.log(err)
+  //   }
+  // },
+
+  // markIncomplete: async (req, res) => {
+  //   try {
+  //     await Todo.findByIdAndUpdate( {_id: req.body.todoIdFromJSFile}, {
+  //       completed: false
+  //     })
+  //     console.log('Marked Incomplete')
+  //     res.json('Marked Incomplete')
+  //   } catch (err) {
+  //     console.log(err);
+  //   }
+  // },

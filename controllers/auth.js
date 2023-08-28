@@ -78,7 +78,7 @@ exports.postSignup = async (req, res, next) => {
     }
 
     await user.save()
-
+    
     req.logIn(user, (err) => {
             if (err) {
               return next(err)

@@ -3,23 +3,34 @@
   <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/style.css">
     <title>Document</title>
   </head>
-  <body>
-    <% if (locals.messages.errors) { %>
-        <% messages.errors.forEach( el => { %>
-            <div class="alert alert-danger"><%= el.msg %></div>
-        <% }) %>    
-    <% } %>
-    <% if (locals.messages.info) { %>
-        <% messages.info.forEach( el => { %>
-            <div class="alert alert-danger"><%= el.msg %></div>
-        <% }) %>    
-    <% } %>
-    <form action="/login" method="POST">
-        <input type="email" name="email" placeholder="Email">
-        <input type="password" name="password" placeholder="Password">
-        <input type="submit">
-    </form>
+  <body class="w-screen h-screen">
+    <header class="w-full">
+        <nav class="grid grid-cols-8 p-4">
+          <a class="lg:col-start-2 col-start-1 text-3xl font-semibold " href="/">Listify</a>
+          <a class="col-start-6 text-2xl justify-self-end font-semibold sm:mr-0 mr-4" href="/login">Login</a>
+          <a class="text-2xl lg:col-start-7 justify-self-end col-start-8 font-semibold" href="/signup">Signup</a>
+        </nav>
+      </header>
+      <div class="mt-44">
+        <% if (locals.messages.errors) { %>
+            <% messages.errors.forEach( el => { %>
+                <div class="alert alert-danger bg-red-500 ab w-4/12 p-4 my-2 delay-150 ease-in mx-auto"><%= el.msg %></div>
+            <% }) %>    
+        <% } %>
+        <% if (locals.messages.info) { %>
+            <% messages.info.forEach( el => { %>
+                <div class="alert alert-danger bg-red-500 ab w-4/12 p-4 my-2 delay-150 ease-in mx-auto "><%= el.msg %></div>
+            <% }) %>    
+        <% } %>
+        <form action="/login" method="POST" class="flex flex-col sm:w-6/12 w-screen md:w-4/12 border-4 border-solid pb-10 px-10 mx-auto">
+            <h1 class="text-center text-2xl font-semibold my-6">Login</h1>
+            <input class="border-2 p-3" type="email" name="email" placeholder="Email">
+            <input class="border-2 p-3 mt-4" type="password" name="password" placeholder="Password">
+            <input class="bg-black text-white mt-4 p-4 rounded cursor-pointer" type="submit">
+        </form>
+      </div>
 </body>
 </html>

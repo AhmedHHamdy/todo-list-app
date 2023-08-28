@@ -6,7 +6,7 @@ const { ensureGuest } = require('../middleware/auth')
 
 // routes
 
-router.get('/', homeController.getIndex)
+router.get('/', ensureGuest, homeController.getIndex)
 router.get('/login', ensureGuest, authController.getLogin)
 router.post('/login', authController.postLogin)
 router.get('/signup', ensureGuest, authController.getSignup)
