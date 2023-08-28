@@ -6,7 +6,8 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "dev": "nodemon server.js",
-    "build-css": "tailwindcss -i src/input.css -o public/style.css --watch"
+    "build-css": "tailwindcss -i src/input.css -o public/style.css --watch",
+    "start": "node index.js"
   },
   "author": "",
   "license": "ISC",
